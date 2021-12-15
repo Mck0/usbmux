@@ -4,13 +4,13 @@
 
 #include <vector>
 
-#include "usbmuxdriver.h"
+// #include "usbmuxdriver.h"
 #include "power-relay.h"
 
 
 ///< Forward declaration of Actual Command classes
 class CommandMsg;
-class CmdSetChannelMsg;
+// class CmdSetChannelMsg;
 class CmdSetRelayMsg;
 class CmdSetWifiConfigMsg;
 class CmdDeviceInfoMsg;
@@ -24,7 +24,7 @@ class CmdHandler
 {
 public:
     explicit CmdHandler();
-    void handle(CmdSetChannelMsg& msg);
+//    void handle(CmdSetChannelMsg& msg);
     void handle(CmdSetRelayMsg& msg);
     void handle(CmdSetWifiConfigMsg& msg);
     void handle(CmdDeviceInfoMsg& msg);
@@ -32,7 +32,7 @@ public:
     void handle(CommandMsg& msg);
 
 private:
-    UsbMuxDriver m_usbMux;
+//    UsbMuxDriver m_usbMux;
     PowerRelay m_pwrRelay;
 };
 
@@ -75,27 +75,6 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 ///< Actual Command classes
 ////////////////////////////////////////////////////////////////////////////////
-
-//------------------------------------------------------------------------------
-class CmdSetChannelMsg : public CommandMsgBase<CmdSetChannelMsg>
-{
-
-public:
-    CmdSetChannelMsg(UsbMuxDriver::UsbChannelNumber chNum=UsbMuxDriver::UsbChannelNumber::USB_CHANNEL_INVALID,
-                     UsbMuxDriver::UsbIdState idState=UsbMuxDriver::UsbIdState::USB_ID_HIGH,
-                     bool disable=false)
-        : channelNumber(chNum)
-        , usbIdState(idState)
-        , disableChannels(disable)
-    {
-    }
-
-public:
-    UsbMuxDriver::UsbChannelNumber channelNumber;
-    UsbMuxDriver::UsbIdState usbIdState;
-    bool disableChannels;
-};
-
 
 //------------------------------------------------------------------------------
 class CmdSetRelayMsg : public CommandMsgBase<CmdSetRelayMsg>

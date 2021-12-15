@@ -34,7 +34,6 @@ void SerialCmdHandler::setCommands()
 {
     m_commands = SerialCmdMap{
                             {"h",   std::bind(&SerialCmdHandler::cmdMenu, this)},
-                            {"ch",  std::bind(&SerialCmdHandler::processCmdChannel, this)},
                             {"pwr", std::bind(&SerialCmdHandler::processCmdPower, this)},
                             {"wf",  std::bind(&SerialCmdHandler::processCmdWifi, this)},
                             {"inf", std::bind(&SerialCmdHandler::processCmdInfo, this)},
@@ -62,49 +61,6 @@ void SerialCmdHandler::cmdMenu(void)
     err(" r,                Reboot the device");
     err("<<<<<<<<<<<<<<<<<<<<<<<<<<<< USBMUX by luk6xff (2020) >>>>>>>>>>>>>>>>>>>>>>>>>");
     err("\n");
-}
-
-//------------------------------------------------------------------------------
-void SerialCmdHandler::processCmdChannel()
-{
-
-    CmdSetChannelMsg msg;
-
-    // Read command
-    if (compareCheckStringArg("d"))
-    {
-        // Drop 'd' command
-        readStringArg();
-        msg.disableChannels = true;
-    }
-    else
-    {
-        uint8_t chNum = readIntArg();
-        if (argOk)
-        {
-            inf("USBMUX Channel number: %d\r\n", chNum);
-            msg.channelNumber = (UsbMuxDriver::UsbChannelNumber)chNum;
-        }
-        else
-        {
-            err("No USBMUX Channel number argument");
-            return;
-        }
-
-        bool usbIdState = readBoolArg();
-        if (argOk)
-        {
-            inf("USBMUX usb_id state: %d\r\n", usbIdState);
-            msg.usbIdState = (UsbMuxDriver::UsbIdState)usbIdState;
-        }
-        else
-        {
-            err("No USBMUX usb_id second argument");
-            return;
-        }
-    }
-
-    m_cmdr.processCmdMsg(msg);
 }
 
 //------------------------------------------------------------------------------

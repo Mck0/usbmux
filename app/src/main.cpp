@@ -14,13 +14,13 @@ void setup()
 {
     utils::init();
     AppSettings::instance().init();
-    server.init();
+    //server.init();
 }
 
 //------------------------------------------------------------------------------
 void loop()
 {
-    server.process();
+    //server.process();
     serCmdHandler.process();
 }
 
